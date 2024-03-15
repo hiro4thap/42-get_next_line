@@ -6,7 +6,7 @@
 /*   By: hiono <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:06:34 by hiono             #+#    #+#             */
-/*   Updated: 2024/03/14 18:29:26 by hiono            ###   ########.fr       */
+/*   Updated: 2024/03/15 16:21:48 by hiono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*ptr;
 	size_t	i;
 
+	if (!s)
+		return (NULL);
 	if (ft_strlen(s + start) < len)
 		len = ft_strlen(s + start);
 	if (len == 0)
@@ -75,12 +77,10 @@ char	*ft_strjoin(char *s1, char const *s2)
 		return (NULL);
 	ptr[0] = '\0';
 	if (ls1 > 0)
-	{
 		ft_strncat(ptr, s1, ls1);
-		free(s1);
-	}
 	if (ls2 > 0)
 		ft_strncat(ptr, s2, ls2);
+	free(s1);
 	return (ptr);
 }
 
