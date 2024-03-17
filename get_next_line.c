@@ -6,13 +6,11 @@
 /*   By: hiono <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:53:38 by hiono             #+#    #+#             */
-/*   Updated: 2024/03/15 16:23:11 by hiono            ###   ########.fr       */
+/*   Updated: 2024/03/15 17:02:36 by hiono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#include <stdio.h>
 
 char	*fill_bf(char *bf, int fd)
 {

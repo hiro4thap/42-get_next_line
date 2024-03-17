@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hiono <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:53:38 by hiono             #+#    #+#             */
-/*   Updated: 2024/03/15 16:23:11 by hiono            ###   ########.fr       */
+/*   Updated: 2024/03/17 12:35:46 by hiono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-
-#include <stdio.h>
+#include "get_next_line_bonus.h"
 
 char	*fill_bf(char *bf, int fd)
 {
@@ -45,28 +43,28 @@ size_t	getllen(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char		*buffer;
+	static char		*buffers[1024];
 	char			*line;
 	size_t			llen;
 	char			*newbf;
 
 	if (read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0 || fd < 0)
 	{
-		free(buffer);
-		buffer = NULL;
+		free(buffers[fd]);
+		buffers[fd] = NULL;
 		return (NULL);
 	}
-	if (!ft_strchr(buffer, '\n'))
-		buffer = fill_bf(buffer, fd);
-	if (!buffer)
+	if (!ft_strchr(buffers[fd], '\n'))
+		buffers[fd] = fill_bf(buffers[fd], fd);
+	if (!buffers[fd])
 	{
-		free(buffer);
+		free(buffers[fd]);
 		return (NULL);
 	}
-	llen = getllen(buffer);
-	line = ft_substr(buffer, 0, llen);
-	newbf = ft_substr(buffer, llen, ft_strlen(buffer) - llen);
-	free(buffer);
-	buffer = newbf;
+	llen = getllen(buffers[fd]);
+	line = ft_substr(buffers[fd], 0, llen);
+	newbf = ft_substr(buffers[fd], llen, ft_strlen(buffers[fd]) - llen);
+	free(buffers[fd]);
+	buffers[fd] = newbf;
 	return (line);
 }
