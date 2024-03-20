@@ -6,7 +6,7 @@
 /*   By: hiono <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:53:38 by hiono             #+#    #+#             */
-/*   Updated: 2024/03/15 17:02:36 by hiono            ###   ########.fr       */
+/*   Updated: 2024/03/20 11:18:22 by hiono            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ size_t	getllen(char *str)
 	return (i);
 }
 
+void	rls_buffer(char **buffer)
+{
+	if (*buffer)
+	{
+		free(*buffer);
+		*buffer = NULL;
+	}
+}
+
 char	*get_next_line(int fd)
 {
 	static char		*buffer;
@@ -50,15 +59,14 @@ char	*get_next_line(int fd)
 
 	if (read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0 || fd < 0)
 	{
-		free(buffer);
-		buffer = NULL;
+		rls_buffer(&buffer);
 		return (NULL);
 	}
 	if (!ft_strchr(buffer, '\n'))
 		buffer = fill_bf(buffer, fd);
 	if (!buffer)
 	{
-		free(buffer);
+		rls_buffer(&buffer);
 		return (NULL);
 	}
 	llen = getllen(buffer);
